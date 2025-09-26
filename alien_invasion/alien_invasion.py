@@ -1,15 +1,15 @@
 import sys 
 
 import pygame
-
-from settings import Settings
-from ship import Ship
-from bullet import Bullet
-from alien import Alien
-from game_stats import GameStats
 from time import sleep
-from button import Button
-from scoreboard import Scoreboard
+
+from .settings import Settings
+from .ship import Ship
+from .bullet import Bullet
+from .alien import Alien
+from .game_stats import GameStats
+from .button import Button
+from .scoreboard import Scoreboard
 
 class AlienInvasion:
     # General class for resource managing and game behaviour.
@@ -49,7 +49,7 @@ class AlienInvasion:
             self._update_screen()
             
     def _check_events(self):
-        # Respods to keyboard and mouse inputs.
+        # Responds to keyboard and mouse inputs.
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -100,12 +100,12 @@ class AlienInvasion:
         # Creates the alien fleet.
         alien = Alien(self)
         alien_width, alien_height = alien.rect.size
-        avaible_space_x = self.settings.screen_width - (2 * alien_width)
-        number_aliens_x = avaible_space_x // (2 * alien_width)
+        available_space_x = self.settings.screen_width - (2 * alien_width)
+        number_aliens_x = available_space_x // (2 * alien_width)
 
         ship_height = self.ship.rect.height
-        avaible_space_y = self.settings.screen_height - (3 * alien_height) - ship_height
-        number_rows = avaible_space_y // (2 * alien_height)
+        available_space_y = self.settings.screen_height - (3 * alien_height) - ship_height
+        number_rows = available_space_y // (2 * alien_height)
 
         # Creates the first row of aliens.
         for row_number in range(number_rows):
@@ -237,4 +237,3 @@ if __name__ == '__main__':
     # Makes a game instance and executes it.
     ai = AlienInvasion()
     ai.run_game()
-    

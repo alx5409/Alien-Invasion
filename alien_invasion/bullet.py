@@ -10,7 +10,7 @@ class Bullet(Sprite):
         self.color = self.settings.bullet_color
 
         # Creates a rectangle for the bullet in (0,0) y then establishes the correct position.
-        self.rect = pygame.Rect(0,0,self.settings.bullet_width,
+        self.rect = pygame.Rect(0, 0, self.settings.bullet_width,
             self.settings.bullet_height)
         self.rect.midtop = ai_game.ship.rect.midtop
 
