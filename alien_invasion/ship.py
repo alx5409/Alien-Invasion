@@ -3,13 +3,11 @@ from pygame.sprite import Sprite
 
 class Ship(Sprite):
     # Class for manage the ship
-
-    def __init__(self,ai_game):
+    def __init__(self, ai_game):
         super().__init__()
         #Initializes the ship and configures its initial position.
         self.screen = ai_game.screen
         self.screen_rect = ai_game.screen.get_rect()
-
         self.settings = ai_game.settings
     
         # Loads the ship image and gets its rect.
@@ -26,7 +24,6 @@ class Ship(Sprite):
         self.moving_right = False
         self.moving_left = False
 
-    
     def update(self):
         # Updates the position of the ship depending on the flag of movement.
         if self.moving_right and self.rect.right < self.screen_rect.right :
