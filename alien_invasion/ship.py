@@ -1,9 +1,17 @@
 import pygame
 from pygame.sprite import Sprite
+from pygame.surface import Surface
+from pygame.rect import Rect
+
+from .alien_invasion import AlienInvasion
+from .settings import Settings
 
 class Ship(Sprite):
+    screen: Surface
+    screen_rect: Rect
+    settings: Settings
     # Class for manage the ship
-    def __init__(self, ai_game):
+    def __init__(self, ai_game: AlienInvasion):
         super().__init__()
         #Initializes the ship and configures its initial position.
         self.screen = ai_game.screen
@@ -26,6 +34,8 @@ class Ship(Sprite):
 
     def update(self):
         # Updates the position of the ship depending on the flag of movement.
+        if not self.image or not self.rect:
+            raise ValueError("Ship image or rect is not initialized.")
         if self.moving_right and self.rect.right < self.screen_rect.right :
             self.x += self.settings.ship_speed
         if self.moving_left and self.rect.left > 0:
@@ -36,8 +46,12 @@ class Ship(Sprite):
 
     def blitme(self):
         # Draws the ship in his actual position.
-        self.screen.blit(self.image, self.rect)
+        if not self.image or not self.rect:
+            raise ValueError("Ship image or rect is not initialized.")
+        self.screen.blit(source=self.image, dest=self.rect)
 
     def center_ship(self):
+        if not self.rect or not self.screen_rect:
+            raise ValueError("Ship rect or screen rect is not initialized.")
         self.rect.midbottom = self.screen_rect.midbottom
         self.x = float(self.rect.x)
