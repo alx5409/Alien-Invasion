@@ -1,7 +1,12 @@
+from typing import TYPE_CHECKING
+
 import pygame
 
+if TYPE_CHECKING:
+    from .alien_invasion import AlienInvasion
+
 class Button:
-    def __init__(self, ai_game, msg):
+    def __init__(self, ai_game: "AlienInvasion", msg: str):
         self.screen = ai_game.screen
         self.screen_rect = self.screen.get_rect()
 
@@ -18,7 +23,7 @@ class Button:
         # Only has to prepare the button message once.
         self._prep_msg(msg)
 
-    def _prep_msg(self, msg):
+    def _prep_msg(self, msg: str):
         self.msg_image = self.font.render(msg, True, self.text_color, self.button_color)
         self.msg_image_rect = self.msg_image.get_rect()
         self.msg_image_rect.center = self.rect.center
