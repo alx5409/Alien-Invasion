@@ -1,10 +1,12 @@
 import pygame.font
 from pygame.sprite import Group
+
+from .alien_invasion import AlienInvasion
 from .ship import Ship
 
 class Scoreboard:
-
-    def __init__(self, ai_game):
+    ships: Group[Ship]
+    def __init__(self, ai_game: AlienInvasion):
         self.ai_game = ai_game
         self.screen = ai_game.screen
         self.screen_rect = self.screen.get_rect()
