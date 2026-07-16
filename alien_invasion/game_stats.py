@@ -1,6 +1,8 @@
+from .alien_invasion import AlienInvasion
+
 class GameStats:
 
-    def __init__(self, ai_game):
+    def __init__(self, ai_game: AlienInvasion):
         self.settings = ai_game.settings
         self.reset_stats()
         # Starts the game in an inactive state.
