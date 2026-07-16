@@ -2,16 +2,19 @@ import pygame
 from pygame.sprite import Sprite
 from pygame.surface import Surface
 from pygame.rect import Rect
+from typing import TYPE_CHECKING
 
 from .settings import Settings
-from .alien_invasion import AlienInvasion
+
+if TYPE_CHECKING:
+    from .alien_invasion import AlienInvasion
 
 class Ship(Sprite):
     screen: Surface
     screen_rect: Rect
     settings: Settings
     # Class for manage the ship
-    def __init__(self, ai_game: AlienInvasion):
+    def __init__(self, ai_game: "AlienInvasion"):
         super().__init__()
         #Initializes the ship and configures its initial position.
         self.screen = ai_game.screen

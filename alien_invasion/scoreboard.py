@@ -1,12 +1,15 @@
 import pygame.font
 from pygame.sprite import Group
+from typing import TYPE_CHECKING
 
-from .alien_invasion import AlienInvasion
 from .ship import Ship
+
+if TYPE_CHECKING:
+    from .alien_invasion import AlienInvasion
 
 class Scoreboard:
     ships: Group[Ship]
-    def __init__(self, ai_game: AlienInvasion):
+    def __init__(self, ai_game: "AlienInvasion"):
         self.ai_game = ai_game
         self.screen = ai_game.screen
         self.screen_rect = self.screen.get_rect()

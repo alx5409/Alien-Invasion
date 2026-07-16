@@ -1,12 +1,14 @@
 import pygame
 from pygame.sprite import Sprite
+from typing import TYPE_CHECKING
 
-from .alien_invasion import AlienInvasion
+if TYPE_CHECKING:
+    from .alien_invasion import AlienInvasion
 
 class Alien(Sprite):
     # Class for representing a single alien in the fleet.
 
-    def __init__(self, ai_game: AlienInvasion):
+    def __init__(self, ai_game: "AlienInvasion"):
         # Initializes the alien the stablishes his initial position.
         super().__init__()
         self.screen = ai_game.screen
