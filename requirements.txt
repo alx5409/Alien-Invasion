@@ -1,19 +1,11 @@
-# Alien Invasion - Requisitos del proyecto
-
-# Librería principal para gráficos y sonido
-pygame>=2.0
-
-# Opcional: Para mostrar imágenes PNG/JPG si decides usarlas en vez de BMP
-Pillow>=10.0
-
-# Opcional: Para desarrollo y comprobación de estilo de código
-flake8>=6.0
-
-# Opcional: Para pruebas unitarias si decides añadir tests
-pytest>=7.0
-
-# Si usas fuentes personalizadas o recursos externos, puedes añadir aquí otras dependencias
-
-# NOTA:
-# Instala todos los requisitos con:
-#    pip install -r requirements.txt
+flake8==7.3.0
+iniconfig==2.3.0
+mccabe==0.7.0
+packaging==26.2
+pillow==12.3.0
+pluggy==1.6.0
+pycodestyle==2.14.0
+pyflakes==3.4.0
+pygame-ce==2.5.7
+Pygments==2.20.0
+pytest==9.1.1

@@ -1,10 +1,15 @@
 import pygame.font
 from pygame.sprite import Group
+from typing import TYPE_CHECKING
+
 from .ship import Ship
 
-class Scoreboard:
+if TYPE_CHECKING:
+    from .alien_invasion import AlienInvasion
 
-    def __init__(self, ai_game):
+class Scoreboard:
+    ships: Group[Ship]
+    def __init__(self, ai_game: "AlienInvasion"):
         self.ai_game = ai_game
         self.screen = ai_game.screen
         self.screen_rect = self.screen.get_rect()
@@ -73,6 +78,8 @@ class Scoreboard:
         self.ships = Group()
         for ship_number in range(self.stats.ships_left):
             ship = Ship(self.ai_game)
+            if not ship.rect:
+                raise ValueError("Ship rect is not initialized.")
             ship.rect.x = 10 + ship_number + ship.rect.width
             ship.rect.y = 10
             self.ships.add(ship)
