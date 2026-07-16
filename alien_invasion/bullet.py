@@ -1,8 +1,14 @@
+from typing import TYPE_CHECKING
+
 import pygame
 from pygame.sprite import Sprite
+from pygame.rect import Rect
+
+if TYPE_CHECKING:
+    from .alien_invasion import AlienInvasion
 
 class Bullet(Sprite):
-    def __init__(self, ai_game):
+    def __init__(self, ai_game: "AlienInvasion"):
         # Creates an object for the bullet in the current position of the ship.
         super().__init__()
         self.screen = ai_game.screen
@@ -10,9 +16,10 @@ class Bullet(Sprite):
         self.color = self.settings.bullet_color
 
         # Creates a rectangle for the bullet in (0,0) y then establishes the correct position.
-        self.rect = pygame.Rect(0, 0, self.settings.bullet_width,
+        self.rect: Rect = Rect(0, 0, self.settings.bullet_width,
             self.settings.bullet_height)
-        self.rect.midtop = ai_game.ship.rect.midtop
+        if ai_game.ship.rect is not None:
+            self.rect.midtop = ai_game.ship.rect.midtop
 
         # Saves the position of the bullet as decimal
         self.y = float(self.rect.y)
@@ -26,4 +33,6 @@ class Bullet(Sprite):
 
     def draw_bullet(self):
         # Draws the bullet on the screen.
+        if not self.rect:
+            raise ValueError("Bullet rect is not initialized.")
         pygame.draw.rect(self.screen, self.color, self.rect)
