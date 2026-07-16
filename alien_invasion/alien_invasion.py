@@ -13,6 +13,9 @@ from .scoreboard import Scoreboard
 
 class AlienInvasion:
     # General class for resource managing and game behaviour.
+    ship: Ship
+    aliens: pygame.sprite.Group[Alien]
+    bullets: pygame.sprite.Group[Bullet]
 
     def __init__(self):
         # Initializes the game and resources.
@@ -63,7 +66,7 @@ class AlienInvasion:
                 mouse_pos = pygame.mouse.get_pos()
                 self._check_play_button(mouse_pos)
     
-    def _check_keydown_events(self,event):
+    def _check_keydown_events(self, event: pygame.event.Event):
         if event.key == pygame.K_RIGHT:
             # Move the ship to the right
             self.ship.moving_right = True
@@ -75,7 +78,7 @@ class AlienInvasion:
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
     
-    def _check_keyup_events(self, event):
+    def _check_keyup_events(self, event: pygame.event.Event):
         if event.key == pygame.K_RIGHT:
             self.ship.moving_right = False
         elif event.key == pygame.K_LEFT:
@@ -91,6 +94,8 @@ class AlienInvasion:
         # Updates the position of the bullets and discards the old ones.
         self.bullets.update()
         for bullet in self.bullets.copy():
+                if not bullet.rect:
+                    raise ValueError("Bullet rect is not initialized.")
                 if bullet.rect.bottom <= 0:
                     self.bullets.remove(bullet)
         
@@ -99,13 +104,17 @@ class AlienInvasion:
     def _create_fleet(self):
         # Creates the alien fleet.
         alien = Alien(self)
+        if not alien.rect:
+            raise ValueError("Alien rect is not initialized.")
         alien_width, alien_height = alien.rect.size
         available_space_x = self.settings.screen_width - (2 * alien_width)
-        number_aliens_x = available_space_x // (2 * alien_width)
+        number_aliens_x = int(available_space_x // (2 * alien_width))
 
+        if not self.ship.rect:
+            raise ValueError("Ship rect is not initialized.")
         ship_height = self.ship.rect.height
         available_space_y = self.settings.screen_height - (3 * alien_height) - ship_height
-        number_rows = available_space_y // (2 * alien_height)
+        number_rows = int(available_space_y // (2 * alien_height))
 
         # Creates the first row of aliens.
         for row_number in range(number_rows):
@@ -113,10 +122,12 @@ class AlienInvasion:
                 self._create_alien(alien_number, row_number)
             
 
-    def _create_alien(self, alien_number, row_number):
+    def _create_alien(self, alien_number: int, row_number: int):
         # Creates an alien and puts it in the row.
             alien = Alien(self)
-            alien_width, alien_height = alien.rect.size
+            if not alien.rect:
+                raise ValueError("Alien rect is not initialized.")
+            alien_width, _ = alien.rect.size
             alien.x = alien_width + 2 * alien_width * alien_number
             alien.rect.x = alien.x
             alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
@@ -157,6 +168,8 @@ class AlienInvasion:
 
     def _change_fleet_direction(self):
         for alien in self.aliens.sprites():
+            if not alien.rect:
+                raise ValueError("Alien rect is not initialized.")
             alien.rect.y += self.settings.fleet_drop_speed
         self.settings.fleet_direction *= -1
     
@@ -184,7 +197,6 @@ class AlienInvasion:
             self.sb.prep_level()
     
     def _ship_hit(self):
-        
         if self.stats.ship_left > 0:
             self.stats.ship_left -= 1
             self.sb.prep_ships()
@@ -204,11 +216,13 @@ class AlienInvasion:
     def _check_aliens_bottom(self):
         screen_rect = self.screen.get_rect()
         for alien in self.aliens.sprites():
+            if not alien.rect:
+                raise ValueError("Alien rect is not initialized.")
             if alien.rect.bottom >= screen_rect.bottom:
                 self._ship_hit()
                 break
     
-    def _check_play_button(self, mouse_pos):
+    def _check_play_button(self, mouse_pos: tuple[int, int]):
         # Starts a new game when the player makes click in Play.
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.stats.game_active:

@@ -1,7 +1,7 @@
 from .alien_invasion import AlienInvasion
 
 class GameStats:
-
+    ship_left: int
     def __init__(self, ai_game: AlienInvasion):
         self.settings = ai_game.settings
         self.reset_stats()

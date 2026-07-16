@@ -3,8 +3,8 @@ from pygame.sprite import Sprite
 from pygame.surface import Surface
 from pygame.rect import Rect
 
-from .alien_invasion import AlienInvasion
 from .settings import Settings
+from .alien_invasion import AlienInvasion
 
 class Ship(Sprite):
     screen: Surface
